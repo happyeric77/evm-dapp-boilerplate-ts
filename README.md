@@ -18,7 +18,12 @@ npm install
 
 3. create a .env file with your env vars:
 ```
+# Required
 PRIVATE_KEY=
+# Optional --> to verify contract by truffle-plugin-verify for BSCSCAN & ETHSCAN
+# truffle run verify <contract name>@<contract addr> --network <network defined in truffle>
+BSCSCAN_API=
+ETHSCAN_API=
 ```
 
 4. start modify your contract in ./contracts and ./migration
