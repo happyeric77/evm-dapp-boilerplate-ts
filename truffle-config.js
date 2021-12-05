@@ -56,5 +56,12 @@ module.exports = {
       enabled: true,
       runs: 200
     }
+  },
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+  api_keys: {
+    bscscan: process.env.BSCSCAN_API,
+    etherscan: process.env.ETHSCAN_API,
   }
 }
