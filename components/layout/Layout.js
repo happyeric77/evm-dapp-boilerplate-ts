@@ -1,5 +1,5 @@
 
-import Class from "./Layout.module.css"
+import Class from "./Layout.module.sass"
 import Head from 'next/head'
 import Footer from "./Footer"
 import {useEffect, useState} from "react"
@@ -8,7 +8,6 @@ import Web3Context from "../../src/Web3Context"
 import detectEthereumProvider from '@metamask/detect-provider'
 import WalletConnectProvider from "@walletconnect/web3-provider"
 import Web3 from "web3";
-import 'antd/dist/antd.css'
 
 
 function Layout(props) {
@@ -171,10 +170,9 @@ function Layout(props) {
                 twitter: "",
                 telegram: "",
                 medium: "",
-                copyright: "Copyright © MultiFarm. All Rights Reserved",
+                copyright: "Copyright © ColorfulLife. All Rights Reserved",
             }}/>
         </div>
-    
     </>
 }
 
