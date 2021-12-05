@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@metamask/detect-provider": "^1.2.0",
     "@openzeppelin/test-helpers": "^0.5.13",
     "antd": "^4.17.2",
     "next": "11.0.1",

@@ -1,28 +1,35 @@
 import Class from "./Header.module.sass"
 import router from 'next/router'
 // Ant Design style
-import { Button, Avatar, Tooltip } from 'antd';
-import { WalletOutlined, DisconnectOutlined, UserOutlined } from '@ant-design/icons'
+import { Button, Avatar, Tooltip, Menu, Dropdown } from 'antd';
+import { WalletOutlined, DisconnectOutlined, UserOutlined, DownOutlined } from '@ant-design/icons'
 
 
-function Header({userAddr, chain, login, logout}) {
+function Header({userAddr, chain, login, logout, supportedChains, switchNetwork}) {
 
 
-    const loginButtonData = {
-        components: [<div key="1" className="connect">Connect</div>],
-        width: "150px",
-        callback: login
-    }
+    
 
-    const logoutButtonData = {
-        components: [<div key="1" className="disconnect">Disconnect</div> ],
-        width: "150px",
-        callback: logout
-    }    
+    const chainMenu = (
+        <Menu>
+            {Object.keys(supportedChains).map((chain, id)=>{
+                return <Menu.Item key={id}><a onClick={()=>{
+                    switchNetwork(chain)
+                    }}>{supportedChains[chain][0]}</a></Menu.Item>
+            })}
+        </Menu>
+    );
+    
 
     return <>
         <div className={Class.header}>
             <div className={Class.imgs} onClick={()=>{router.push("/")}}></div>
+
+            { <Dropdown overlay={chainMenu} trigger={['click']} >
+                <div className="ant-dropdown-link" style={{marginRight: "10px"}}>
+                    Select Network <DownOutlined />
+                </div>
+            </Dropdown>}
 
             {userAddr && 
                 <Avatar.Group /*size="large"*/ className={Class.userInfo} >

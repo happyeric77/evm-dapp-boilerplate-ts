@@ -6,7 +6,7 @@ const supportedChain = {
     97: "BSC Test Net"
 }
 const defaultWeb3 = new Web3(new Web3.providers.HttpProvider("https://data-seed-prebsc-1-s1.binance.org:8545/"))
-
+ 
 const getWeb3 = (chainId) => {
     const web3Promise = new Promise(async (resolve, reject) => {
         // Wait for loading completion to avoid race conditions with web3 injection timing.        
