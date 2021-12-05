@@ -6,6 +6,8 @@ import {useEffect, useRef, useState} from "react"
 import Header from "./Header"
 import getWeb3, {supportedChain, defaultWeb3} from "../../src/getWeb3"
 import Web3Context from "../../src/Web3Context"
+import 'antd/dist/antd.css'
+
 
 function Layout(props) {
     const web3 = useRef(defaultWeb3)
@@ -65,7 +67,7 @@ function Layout(props) {
             {/* fontawesome */}
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossOrigin="anonymous"/>
             
-            <title>Multitoken</title>
+            <title>DAPP Boilerplate</title>
         </Head>
 
         <div className={Class.layout} >

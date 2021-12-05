@@ -1,7 +1,8 @@
-
-import Button from "../ui/Button"
 import Class from "./Header.module.sass"
 import router from 'next/router'
+// Ant Design style
+import { Button, Avatar, Tooltip } from 'antd';
+import { WalletOutlined, DisconnectOutlined, UserOutlined } from '@ant-design/icons'
 
 
 function Header({userAddr, chain, login, logout}) {
@@ -21,18 +22,22 @@ function Header({userAddr, chain, login, logout}) {
 
     return <>
         <div className={Class.header}>
+            <div className={Class.imgs} onClick={()=>{router.push("/")}}></div>
 
-            <div className={Class.imgs} onClick={()=>{router.push("/")}} >
-            </div>
-            
-            <div className={Class.userInfo}>                
-                <div className="addr">{userAddr && userAddr.slice(0,6)+ "...."+userAddr.slice(-4)}</div>
-                <div className="chain">{userAddr && chain}</div>
-            </div>
+            {userAddr && 
+                <Avatar.Group /*size="large"*/ className={Class.userInfo} >
+                    <Avatar icon={<UserOutlined/>} style={{ backgroundColor: '#f56a00' }}></Avatar>
+                    <Tooltip title= {userAddr.slice(0,6)+ "...."+userAddr.slice(-4)} placement="top">
+                        <div className="chain">{userAddr && chain}</div>
+                    </Tooltip>
+                </Avatar.Group>
+            }
 
             <div className={Class.buttons}>
-                {!userAddr && <Button data={loginButtonData} />}
-                {userAddr && <Button data={logoutButtonData} />}
+                {!userAddr ? 
+                    <Button icon={<WalletOutlined />} className={Class.button} onClick={login}> Connect </Button>:
+                    <Button icon={<DisconnectOutlined />} className={Class.button} onClick={logout}> Disconnect </Button>
+                }
             </div>
             
         </div>
