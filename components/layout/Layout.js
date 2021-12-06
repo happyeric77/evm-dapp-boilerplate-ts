@@ -8,26 +8,20 @@ import Web3Context from "../../src/Web3Context"
 import detectEthereumProvider from '@metamask/detect-provider'
 import WalletConnectProvider from "@walletconnect/web3-provider"
 import Web3 from "web3";
+import { supportedChains } from "../../src/utils/networkProvider"
 
 
 function Layout(props) {
     let provider;
     let chainId;
-    const [web3, setWeb3] = useState();
-    // Enable the chains that will be supported
-    const supportedChains = {
-        "0x61": ["BSC Test Net", 'https://data-seed-prebsc-1-s1.binance.org:8545/'],
-        "0x38": ["Binance Smart Chain Mainnet", "https://bsc-dataseed1.binance.org"],
-        // "0x3": ["Ethereum Testnet Ropsten", null]
-    }  
-    
+    const [web3, setWeb3] = useState();    
     const [userAddr, setUserAddr] = useState()
     const [currentChain, setChain] = useState()
 
     useEffect(()=>{
         fetchData()
         web3?._provider.on && web3._provider.on("chainChanged", (chainId)=>{
-            setChain(supportedChains[chainId][0])
+            setChain(supportedChains[chainId].chainName)
             login()
         })
     }, [userAddr])
@@ -45,7 +39,7 @@ function Layout(props) {
                 return
             }
             setWeb3(new Web3(provider))
-            setChain(supportedChains[chainId][0])
+            setChain(supportedChains[chainId].chainName)
         } catch(e){
             // alert("No injected web3, install metamask")
             getDefaultWeb3()
@@ -53,8 +47,9 @@ function Layout(props) {
     }
 
     const getDefaultWeb3 = () =>{
-        setWeb3(new Web3(supportedChains[Object.keys(supportedChains)[0]][1]))
-        setChain(supportedChains[Object.keys(supportedChains)[0]][0])
+        setWeb3(new Web3(supportedChains[Object.keys(supportedChains)[0]].rpcUrl))
+        setChain(supportedChains[Object.keys(supportedChains)[0]].chainName) 
+        
     }
 
     function clearUserInfo() {
@@ -84,7 +79,7 @@ function Layout(props) {
         try {
             let rpc = {}
             Object.keys(supportedChains).forEach((chain)=>{
-                rpc[Number(chain)] = supportedChains[chain][1]
+                rpc[Number(chain)] = supportedChains[chain].rpcUrl
             })
             console.log("Log in with walletConnect")
             const provider = await new WalletConnectProvider({
@@ -112,7 +107,7 @@ function Layout(props) {
         setUserAddr(addr[0])
         let chainId = "0x" + (await web3.eth.getChainId()/1).toString(16)
         if (!supportedChains[chainId]) {alert("Does not support this network")}
-        setChain(supportedChains[chainId][0])
+        setChain(supportedChains[chainId].chainName)
     }
 
     async function logout() {
@@ -178,18 +173,3 @@ function Layout(props) {
 
 
 export default Layout
-
-/************************
- * Data format example **
- ***********************/
-
-//  const layoutData = {
-//     pages: [
-//         {pageName: "Blockchain Dev", url: "blockchain_dev"},
-//         {pageName: "Web Dev", url: "web_dev"},
-//         {pageName: "About Me", url: "about_me"},
-//         {pageName: "Contact ME", url: "contact_me"}
-//     ],
-//     github: "",
-//     twitter: "",
-// }

@@ -7,19 +7,15 @@ import { WalletOutlined, DisconnectOutlined, UserOutlined, DownOutlined } from '
 
 function Header({userAddr, chain, login, logout, supportedChains, switchNetwork}) {
 
-
-    
-
     const chainMenu = (
         <Menu>
             {Object.keys(supportedChains).map((chain, id)=>{
                 return <Menu.Item key={id}><a onClick={()=>{
                     switchNetwork(chain)
-                    }}>{supportedChains[chain][0]}</a></Menu.Item>
+                    }}>{supportedChains[chain].chainName}</a></Menu.Item>
             })}
         </Menu>
-    );
-    
+    );    
 
     return <>
         <div className={Class.header}>

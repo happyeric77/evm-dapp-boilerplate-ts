@@ -13,19 +13,9 @@
 
     .imgs 
         flex: 1
-
-    // .pages
-    //     flex: 3
-    //     display: flex
-    //     justify-content: space-evenly
-    //     .page
-    //         font-size: 0.8em
-    //         margin: 10px
-    //         color: $colorLightGrey  
     
     .userInfo
-        color: #f56a00
-        background-color: #fde3cf
+        border: #f56a00 solid 1px
         border-radius: 50px
         display: flex
         align-items: center
@@ -37,11 +27,12 @@
         display: flex
         justify-content: flex-end
         & .button
-            color: #f56a00
-            background-color: #fde3cf
             border: #f56a00 1px solid
+            background-color: $base
+            color: white
             &:hover
-                background-color: black
+                background-color: white
+                color: black
 
 @media ( max-width: 1100px)
     .pages
