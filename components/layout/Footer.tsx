@@ -1,8 +1,8 @@
-import Class from "./Footer.module.css"
-// import kupadLogo from "../../src/kupadLogo.png"
+import Class from "./Footer.module.sass"
 import Image from "next/image"
+import {FooterProps} from "../../src/types"
 
-function Footer({data}) {
+function Footer({data}: FooterProps) {
     return <>
         <div className={Class.footer}>
 

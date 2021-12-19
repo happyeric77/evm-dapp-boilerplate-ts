@@ -9,24 +9,25 @@ import detectEthereumProvider from '@metamask/detect-provider'
 import WalletConnectProvider from "@walletconnect/web3-provider"
 import Web3 from "web3";
 import { supportedChains } from "../../src/utils/networkProvider"
+import {Web3Type} from "../../src/types"
 
 
-function Layout(props) {
-    let provider;
-    let chainId;
-    const [web3, setWeb3] = useState();    
-    const [userAddr, setUserAddr] = useState()
-    const [currentChain, setChain] = useState()
+function Layout({...props}): JSX.Element {
+    let provider: any;
+    let chainId: string| null = null
+    const [web3, setWeb3] = useState<Web3Type|any>();    
+    const [userAddr, setUserAddr] = useState<string|null>()
+    const [currentChain, setChain] = useState<string|null>()
 
     useEffect(()=>{
         fetchData()
-        web3?._provider.on && web3._provider.on("chainChanged", (chainId)=>{
+        web3?._provider && web3._provider.on("chainChanged", (chainId: string)=>{
             setChain(supportedChains[chainId].chainName)
             login()
         })
-    }, [userAddr])
+    }, [userAddr, currentChain])
     const fetchData = async () =>{
-        await initWeb3()        
+        await initWeb3()
     }
 
     const initWeb3 = async () =>{
@@ -39,7 +40,7 @@ function Layout(props) {
                 return
             }
             setWeb3(new Web3(provider))
-            setChain(supportedChains[chainId].chainName)
+            setChain(chainId && supportedChains[chainId].chainName)
         } catch(e){
             // alert("No injected web3, install metamask")
             getDefaultWeb3()
@@ -56,17 +57,18 @@ function Layout(props) {
         setUserAddr(null)
     }
 
-    async function login(walletConnChainId=0) {
+    async function login(walletConnChainId: string="0") {
         if (window.ethereum) {
             await startInjectedWeb3()
         } else {
-            await startWalletConnWeb3()
+            await startWalletConnWeb3(walletConnChainId)
         } 
     }
 
     async function startInjectedWeb3(){
         console.log("Browser injected web3 'ethereum'")
         try {
+            
             provider = await detectEthereumProvider()
             await provider.request({ method: 'eth_requestAccounts' });
             instanciateWeb3(provider)
@@ -75,9 +77,9 @@ function Layout(props) {
         }
     }
     
-    async function startWalletConnWeb3() {
+    async function startWalletConnWeb3(walletConnChainId: string) {
         try {
-            let rpc = {}
+            let rpc: {[key: number]: string} = {}
             Object.keys(supportedChains).forEach((chain)=>{
                 rpc[Number(chain)] = supportedChains[chain].rpcUrl
             })
@@ -100,7 +102,7 @@ function Layout(props) {
         }  
     }
 
-    async function instanciateWeb3(provider) {
+    async function instanciateWeb3(provider: any) {
         let web3 = await new Web3(provider)
         let addr = await web3.eth.getAccounts()
         setWeb3(web3)
@@ -113,7 +115,7 @@ function Layout(props) {
     async function logout() {
         try {
             // for walletconnect
-            web3 && await web3._provider.disconnect()
+            web3 && await web3._provider?.disconnect()
         } catch (e){
             // Injected web3
             web3 && web3.eth.accounts.wallet.clear()
@@ -122,7 +124,7 @@ function Layout(props) {
         clearUserInfo()
     }
 
-    async function switchNetwork(chain) {
+    async function switchNetwork(chain: string) {
         if (web3?._provider.request) {
             await web3._provider.request({
             method: 'wallet_switchEthereumChain',
@@ -153,7 +155,7 @@ function Layout(props) {
                 switchNetwork={switchNetwork}
             />
 
-            <Web3Context.Provider value={{addr: userAddr,chain: currentChain, web3: web3}}>
+            <Web3Context.Provider value={{addr: userAddr,chain: currentChain, web3: web3, chainId: chainId}}>
                 <main className={Class.content} >{props.children}</main>
             </Web3Context.Provider>
 

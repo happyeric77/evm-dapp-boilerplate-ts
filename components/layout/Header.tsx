@@ -3,9 +3,11 @@ import router from 'next/router'
 // Ant Design style
 import { Button, Avatar, Tooltip, Menu, Dropdown } from 'antd';
 import { WalletOutlined, DisconnectOutlined, UserOutlined, DownOutlined } from '@ant-design/icons'
+import { HeaderType } from "../../src/types";
 
 
-function Header({userAddr, chain, login, logout, supportedChains, switchNetwork}) {
+
+function Header({userAddr, chain, login, logout, supportedChains, switchNetwork}: HeaderType) {
 
     const chainMenu = (
         <Menu>
