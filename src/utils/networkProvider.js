@@ -10,7 +10,7 @@ export const supportedChains = {
         chainName: "BSC Test Net", 
         rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
         symbol: "BNB",
-        explorer: "https://bscscan.com/",
+        explorer: "https://testnet.bscscan.com/",
     },
     "0x38": {
         chainName: "Binance Smart Chain Mainnet", 
@@ -29,5 +29,11 @@ export const supportedChains = {
         symbol: "ETH",
         rpcUrl: process.env.INFURA_RINKEBY,
         explorer: "https://rinkeby.etherscan.io/",
-    }    
+    },
+    "0x13881": {
+        chainName: "Polygon_Mumbai",
+        symbol: "MATIC",
+        rpcUrl: "https://rpc-mumbai.maticvigil.com/",
+        explorer: "https://mumbai.polygonscan.com/",
+    }, 
 }  
