@@ -1,10 +1,10 @@
-import AppName from "../components/app/AppName";
+import { FC } from "react";
 
-export default function Home(): JSX.Element {
+const Home: FC = () => {
   return (
     <div>
-      <AppName/>
+      <div>EVM dapp typescript boilerplate</div>
     </div>
-  )
-}
-
+  );
+};
+export default Home;

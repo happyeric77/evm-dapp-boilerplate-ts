@@ -1,51 +1,86 @@
-import Class from "./Header.module.sass"
-import router from 'next/router'
-// Ant Design style
-import { Button, Avatar, Tooltip, Menu, Dropdown } from 'antd';
-import { WalletOutlined, DisconnectOutlined, UserOutlined, DownOutlined } from '@ant-design/icons'
-import { HeaderType } from "../../src/types";
+import style from "../../styles/Header.module.sass";
+import router from "next/router";
+import { Button, Avatar, Tooltip, Menu, Dropdown } from "antd";
+import { WalletOutlined, DisconnectOutlined, UserOutlined, DownOutlined } from "@ant-design/icons";
+import { useWeb3 } from "../../hooks/useWeb3";
+import { supportedChains } from "../../utils/constant";
+import detectEthereumProvider from "@metamask/detect-provider";
+import { FC } from "react";
 
+const Header: FC = () => {
+  const { web3Data, loginWithInjectedWeb3, loginWithWalletConnect, logout, switchNetwork } = useWeb3();
 
+  const login = async () => {
+    const provider = await detectEthereumProvider();
+    if (provider) {
+      loginWithInjectedWeb3();
+    } else {
+      // TODO: where to get chainId
+      loginWithWalletConnect(97);
+    }
+  };
+  // TODO: Deprecated, needs migration
+  const chainMenu = (
+    <Menu>
+      {Object.keys(supportedChains).map((chain, id) => {
+        return (
+          <Menu.Item key={id}>
+            <a
+              onClick={() => {
+                switchNetwork(Number(chain));
+              }}
+            >
+              {supportedChains[chain].chainName}
+            </a>
+          </Menu.Item>
+        );
+      })}
+    </Menu>
+  );
 
-function Header({userAddr, chain, login, logout, supportedChains, switchNetwork}: HeaderType) {
+  return (
+    <>
+      <div className={style.header}>
+        <div
+          className={style.imgs}
+          onClick={() => {
+            router.push("/");
+          }}
+        ></div>
 
-    const chainMenu = (
-        <Menu>
-            {Object.keys(supportedChains).map((chain, id)=>{
-                return <Menu.Item key={id}><a onClick={()=>{
-                    switchNetwork(chain)
-                    }}>{supportedChains[chain].chainName}</a></Menu.Item>
-            })}
-        </Menu>
-    );    
-
-    return <>
-        <div className={Class.header}>
-            <div className={Class.imgs} onClick={()=>{router.push("/")}}></div>
-
-            { <Dropdown overlay={chainMenu} trigger={['click']} >
-                <div className="ant-dropdown-link" style={{marginRight: "10px"}}>
-                    Select Network <DownOutlined />
-                </div>
-            </Dropdown>}
-
-            {userAddr && 
-                <Avatar.Group /*size="large"*/ className={Class.userInfo} >
-                    <Avatar icon={<UserOutlined/>} style={{ backgroundColor: '#f56a00' }}></Avatar>
-                    <Tooltip title= {userAddr.slice(0,6)+ "...."+userAddr.slice(-4)} placement="top">
-                        <div className="chain">{userAddr && chain}</div>
-                    </Tooltip>
-                </Avatar.Group>
-            }
-
-            <div className={Class.buttons}>
-                {!userAddr ? 
-                    <Button icon={<WalletOutlined />} className={Class.button} onClick={login}> Connect </Button>:
-                    <Button icon={<DisconnectOutlined />} className={Class.button} onClick={logout}> Disconnect </Button>
-                }
+        {
+          <Dropdown overlay={chainMenu} trigger={["click"]}>
+            <div className="ant-dropdown-link" style={{ marginRight: "10px" }}>
+              Select Network <DownOutlined />
             </div>
-            
+          </Dropdown>
+        }
+
+        {web3Data?.accounts?.[0] && (
+          <Avatar.Group /*size="large"*/ className={style.userInfo}>
+            <Avatar icon={<UserOutlined />} style={{ backgroundColor: "#f56a00" }}></Avatar>
+            <Tooltip
+              title={web3Data?.accounts?.[0].slice(0, 6) + "...." + web3Data?.accounts?.[0].slice(-4)}
+              placement="top"
+            >
+              <div className="chain">{web3Data?.accounts?.[0] && web3Data?.chainId}</div>
+            </Tooltip>
+          </Avatar.Group>
+        )}
+
+        <div className={style.buttons}>
+          {!web3Data?.accounts?.[0] ? (
+            <Button icon={<WalletOutlined />} className={style.button} onClick={login}>
+              Connect
+            </Button>
+          ) : (
+            <Button icon={<DisconnectOutlined />} className={style.button} onClick={logout}>
+              Disconnect
+            </Button>
+          )}
         </div>
+      </div>
     </>
-}
-export default Header
+  );
+};
+export default Header;

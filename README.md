@@ -1,33 +1,41 @@
-# The boilerplate of truffle + nextjs DAPP
+# The EVM DAPP typescript boilerplate
 
-The boilerplate is created by following two nodejs package.
-    - Truffle
-    - nextjs
+The boilerplate is powered by Nextjs which fully supports typescript
 
 # How to use
 
 1. clone the repo:
+
 ```
 git clone https://github.com/happyeric77/reactDappBoilerplate
 ```
 
 2. install npm depandencies:
-```
-npm install
-```
 
-3. create a .env file with your env vars:
 ```
-# Required
-PRIVATE_KEY=
-# Optional --> to verify contract by truffle-plugin-verify for BSCSCAN & ETHSCAN
-# truffle run verify <contract name>@<contract addr> --network <network defined in truffle>
-BSCSCAN_API=
-ETHSCAN_API=
+yarn install
 ```
 
-4. start modify your contract in ./contracts and ./migration
+3. Run and listen on localhost port 3000
 
-5. the compiled file will be in ./src/
+```
+yarn dev
+```
 
-6. create the front by modifying ./src/App.js: The is in react syntax
+## useWeb3 hook
+
+Use useWeb3 hook to easily access global web3 methods:
+
+```
+const { web3Data, loginWithInjectedWeb3, loginWithWalletConnect, logout, switchNetwork } = useWeb3();
+```
+
+# Release note
+
+## 20230212 Refactor and deprecate contract section
+
+1. To reduce complexity, truffle section are removed. The contract section can be referred to [This repo](git@github.com:happyeric77/truffle_ts_boilerplate.git)
+
+2. Remove unnecessary components
+3. Add hooks: useWeb3 & useNotify
+4. Move all style sheet to ./styles
