@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from "react";
 import Web3 from "web3";
 import { AbstractProvider } from "web3-core";
 import { JsonRpcPayload, JsonRpcResponse } from "web3-core-helpers";
+import LoadingContext, { ILoading } from "./useLoading";
 import { EAlertStatus, INotify, NotifyContext } from "./useNotify";
 import Web3Context, { IWeb3Data } from "./useWeb3";
 
@@ -47,6 +48,7 @@ interface Props {
 export const AppContext: FC<Props> = ({ children }) => {
   const [web3Data, setWeb3Data] = useState<IWeb3Data>({} as IWeb3Data);
   const [notify, setNotify] = useState<INotify>({} as INotify);
+  const [loading, setLoading] = useState<ILoading>({} as ILoading);
 
   useEffect(() => {
     detectEthereumProvider().then(async (provider: any) => {
@@ -157,7 +159,9 @@ export const AppContext: FC<Props> = ({ children }) => {
 
   return (
     <Web3Context.Provider value={{ web3Data, loginWithInjectedWeb3, loginWithWalletConnect, logout, switchNetwork }}>
-      <NotifyContext.Provider value={{ notify, setNotify }}>{children}</NotifyContext.Provider>
+      <NotifyContext.Provider value={{ notify, setNotify }}>
+        <LoadingContext.Provider value={{ loading, setLoading }}>{children}</LoadingContext.Provider>
+      </NotifyContext.Provider>
     </Web3Context.Provider>
   );
 };

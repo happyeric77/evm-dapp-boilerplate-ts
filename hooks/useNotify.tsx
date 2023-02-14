@@ -2,7 +2,7 @@ import { createContext, Dispatch, SetStateAction, useContext } from "react";
 export interface INotify {
   status: EAlertStatus;
   title: string;
-  description: string;
+  description?: string;
   showIcon?: boolean;
 }
 

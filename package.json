@@ -8,7 +8,8 @@
     "build": "next build",
     "export": "next build && next export",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-types": "typechain --target=web3-v1 --out-dir 'utils/contractTypes' 'utils/contracts/*.json'"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -29,12 +30,14 @@
     "web3": "^1.3.4"
   },
   "devDependencies": {
-    "@types/web3": "^1.2.2",
+    "@typechain/web3-v1": "^6.0.2",
     "@types/react": "18.0.1",
+    "@types/web3": "^1.2.2",
     "@walletconnect/client": "^1.5.2",
     "@walletconnect/web3-provider": "^1.5.2",
     "dotenv": "^8.2.0",
     "eslint": "8.7.0",
-    "eslint-config-next": "12.0.8"
+    "eslint-config-next": "12.0.8",
+    "typechain": "^8.1.1"
   }
 }

@@ -1,19 +1,21 @@
 # The EVM DAPP typescript boilerplate
 
-The boilerplate is powered by Nextjs which fully supports typescript
+The boilerplate is powered by Nextjs/typechain which fully supports typescript
 
 # How to use
 
 1. clone the repo:
 
 ```
-git clone https://github.com/happyeric77/reactDappBoilerplate
+git clone https://github.com/happyeric77/evm-dapp-boilerplate-ts
 ```
 
-2. install npm depandencies:
+2. install npm depandencies and generate types:
 
 ```
 yarn install
+
+yarn generate-types // Generate a new folder `contractTypes` which contains all the contracts types definition. The types are generated from /utils/contracts/*.json (compiled by truffle)
 ```
 
 3. Run and listen on localhost port 3000
@@ -31,6 +33,13 @@ const { web3Data, loginWithInjectedWeb3, loginWithWalletConnect, logout, switchN
 ```
 
 # Release note
+
+## 20230214
+
+1. Add approve-erc20 page to demo contract interaction
+2. Introduce typechain (yarn generate-types) to enable types for web3.eth.Contract (see example in `./pages/approve-erc20.tsx`)
+3. Add useLoading hook
+4. Clean up and small optimization
 
 ## 20230212 Refactor and deprecate contract section
 
