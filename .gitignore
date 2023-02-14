@@ -36,4 +36,4 @@ yarn.lock
 .vercel
 
 # typechain
-/utils/contractTypes
+# /utils/contractTypes

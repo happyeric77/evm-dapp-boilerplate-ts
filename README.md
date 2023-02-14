@@ -1,6 +1,7 @@
 # The EVM DAPP typescript boilerplate
 
 The boilerplate is powered by Nextjs/typechain which fully supports typescript
+Check the [result here](https://evm-dapp-boilerplate-ts.vercel.app/)
 
 # How to use
 
