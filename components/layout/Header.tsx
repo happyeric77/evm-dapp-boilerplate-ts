@@ -2,10 +2,10 @@ import style from "../../styles/Header.module.sass";
 import router from "next/router";
 import { Button, Avatar, Tooltip, Dropdown, Space } from "antd";
 import { WalletOutlined, DisconnectOutlined, UserOutlined, DownOutlined } from "@ant-design/icons";
-import { useWeb3 } from "../../hooks/useWeb3";
 import { supportedChains } from "../../utils/constant";
 import { FC } from "react";
 import Link from "next/link";
+import { useWeb3 } from "evm-web3-hooks";
 
 const Header: FC = () => {
   const { web3Data, loginWithInjectedWeb3, loginWithWalletConnect, logout, switchNetwork } = useWeb3();

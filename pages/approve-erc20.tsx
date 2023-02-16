@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useWeb3 } from "../hooks/useWeb3";
+// import { useWeb3 } from "../hooks/useWeb3";
 import ERC20Json from "../utils/contracts/ERC20.json";
 import { ERC20 } from "../utils/contractTypes/ERC20";
 import { AbiItem } from "web3-utils";
@@ -9,6 +9,7 @@ import { useLoading } from "../hooks/useLoading";
 import { Button, Input, Statistic } from "antd";
 import { CheckCircleFilled, CodeFilled, DollarCircleFilled } from "@ant-design/icons";
 import style from "../styles/Erc20approve.module.sass";
+import { useWeb3 } from "evm-web3-hooks";
 
 const ApproveERC20: FC = () => {
   const { web3Data } = useWeb3();

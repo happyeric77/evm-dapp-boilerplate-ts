@@ -1,6 +1,6 @@
 # The EVM DAPP typescript boilerplate
 
-The boilerplate is powered by Nextjs/typechain which fully supports typescript
+The boilerplate is powered by Nextjs/typechain which fully supports typescript.
 Check the [result here](https://evm-dapp-boilerplate-ts.vercel.app/)
 
 # How to use
@@ -34,6 +34,11 @@ const { web3Data, loginWithInjectedWeb3, loginWithWalletConnect, logout, switchN
 ```
 
 # Release note
+
+## 20230216
+
+Consume the npm evm-web3-hook react hook
+`yarn add evm-web3-hooks` or `npm install evm-web3-hooks`
 
 ## 20230214
 
